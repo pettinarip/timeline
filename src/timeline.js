@@ -99,16 +99,25 @@ export default () => {
     lines.exit().remove()
 
     const nodes = lines.merge(linesEnter).selectAll('.node')
-      .data(d => d, (d, i) => `${d.depth}${d.data.id}${d.data.type}`)
+      .data(d => d, (d, i) => `${d.depth}/${d.data.id}/${d.data.type}`)
 
+    drawNodes(nodes)
+  }
+
+  function drawNodes (nodes) {
     const nodesEnter = nodes.enter().append('g')
 
-    nodes.merge(nodesEnter).attr('class', d => d.data.class
-      ? `node ${d.classed} ${d.data.class}`
-      : `node ${d.classed}`)
+    nodesEnter.attr('class', d => d.data.class
+    ? `node ${d.classed} ${d.data.class}`
+    : `node ${d.classed}`)
     .each(function (d, i) {
       const node = d3Selection.select(this)
-      nodeCreators[d.data.type](node, d)
+      nodeCreators[d.data.type].create(node, d)
+    })
+
+    nodes.each(function (d, i) {
+      const node = d3Selection.select(this)
+      nodeCreators[d.data.type].update(node, d)
     })
 
     nodes.exit().remove()

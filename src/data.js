@@ -5,7 +5,6 @@ export const data1 = [
     class: 'bar--wrapper',
     start: 1485392400,
     end: 1485416400,
-    roundedCorners: true,
     children: [{
       id: 1,
       type: 'event',
@@ -31,7 +30,6 @@ export const data1 = [
     class: 'bar--wrapper',
     start: 1485416400,
     end: 1485435600,
-    roundedCorners: true,
     children: [{
       id: 1,
       type: 'bar',
@@ -57,7 +55,6 @@ export const data1 = [
     class: 'bar--wrapper',
     start: 1485392400,
     end: 1485435600,
-    roundedCorners: true,
     children: [{
       id: 1,
       type: 'checkpoint',
@@ -84,7 +81,6 @@ export const data2 = [
     class: 'bar--wrapper',
     start: 1485392400,
     end: 1485416400,
-    roundedCorners: true,
     children: [{
       id: 1,
       type: 'event',
@@ -96,6 +92,41 @@ export const data2 = [
       type: 'event',
       time: 1485406400,
       tick: true,
+      children: []
+    }]
+  }
+]
+
+export const data2mod = [
+  {
+    id: 1,
+    type: 'bar',
+    class: 'bar--wrapper',
+    start: 1485392400,
+    end: 1485435600,
+    children: [{
+      id: 1,
+      type: 'event',
+      time: 1485392400,
+      tick: true,
+      children: []
+    }, {
+      id: 2,
+      type: 'event',
+      time: 1485406400,
+      tick: true,
+      children: []
+    }, {
+      id: 1,
+      type: 'checkpoint',
+      time: 1485412400,
+      children: []
+    }, {
+      id: 1,
+      type: 'bar',
+      class: 'bar--primary',
+      start: 1485412400,
+      end: 1485415400,
       children: []
     }]
   }

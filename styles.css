@@ -3,8 +3,6 @@ body, html {
   padding: 0;
 }
 
-.node, .node * { transition: all .4s ease-in-out; }
-
 .node.bar { transform-origin: center center; }
 .node.event circle { transform-origin: center 0; }
 .node.event .tick { transform-origin: center center; }

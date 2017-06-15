@@ -1,6 +1,6 @@
 import { select } from 'd3-selection'
 import timeline from './timeline'
-import { data1, data2 } from './data'
+import { data1, data2, data2mod } from './data'
 
 // EXAMPLE 1
 const timelineChart1 = timeline()
@@ -29,7 +29,6 @@ function example2 (data) {
 example2(data2)
 
 const updateButton = document.getElementById('update-data')
-const data2mod = [data1[1]]
 let toggleFlag = false
 updateButton.addEventListener('click', (e) => {
   e.preventDefault()

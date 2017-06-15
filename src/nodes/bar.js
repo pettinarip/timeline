@@ -1,10 +1,20 @@
 export default (scale) => {
-  function bar (node, d) {
+  function create (node, d) {
     node.append('rect')
       .attr('x', scale(d.data.start))
       .attr('width', scale(d.data.end) - scale(d.data.start))
       .attr('fill', d.data.color || 'black')
   }
 
-  return bar
+  function update (node, d) {
+    node.transition().select('rect')
+      .attr('x', scale(d.data.start))
+      .attr('width', scale(d.data.end) - scale(d.data.start))
+      .attr('fill', d.data.color || 'black')
+  }
+
+  return {
+    create,
+    update
+  }
 }
