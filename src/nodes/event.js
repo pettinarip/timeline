@@ -1,20 +1,14 @@
-import { select } from 'd3-selection'
-
 export default (scale) => {
-  function event (selection) {
-    selection.each(function (datum) {
-      const node = select(this)
+  function event (node, d) {
+    node.attr('transform', `translate(${scale(d.data.time)},0)`)
+        .append('circle')
+      .attr('fill', d.data.color || '#000')
 
-      node.attr('transform', `translate(${scale(datum.data.time)},0)`)
-          .append('circle')
-        .attr('fill', datum.data.color || '#000')
-
-      if (datum.data.tick) {
-        node.append('rect')
-          .attr('class', 'tick')
-          .attr('width', 1)
-      }
-    })
+    if (d.data.tick) {
+      node.append('rect')
+        .attr('class', 'tick')
+        .attr('width', 1)
+    }
   }
 
   return event

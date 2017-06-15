@@ -18,6 +18,11 @@ export const data1 = [
       time: 1485406400,
       tick: true,
       children: []
+    }, {
+      id: 1,
+      type: 'checkpoint',
+      time: 1485406400,
+      children: []
     }]
   },
   {
@@ -55,9 +60,14 @@ export const data1 = [
     roundedCorners: true,
     children: [{
       id: 1,
-      type: 'event',
-      time: 1485421600,
-      children: []
+      type: 'checkpoint',
+      time: 1485412400,
+      children: [{
+        id: 1,
+        type: 'event',
+        time: 1485421600,
+        children: []
+      }]
     }, {
       id: 2,
       type: 'event',

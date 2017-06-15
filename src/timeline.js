@@ -1,5 +1,4 @@
 import * as d3Selection from 'd3-selection'
-import * as d3Array from 'd3-array'
 import { scaleTime } from 'd3-scale'
 import { hierarchy } from 'd3-hierarchy'
 import { dispatch } from 'd3-dispatch'
@@ -29,6 +28,13 @@ export default () => {
   let domain
   let dispatcher = dispatch('timelineClick', 'timelineMouseOver', 'timelineMouseOut')
 
+  const nodeTypes = {
+    bar,
+    event,
+    checkpoint
+  }
+  let nodeCreators = {}
+
   function timeline (_selection) {
     _selection.each(function (d) {
       dataNodes = d
@@ -52,7 +58,9 @@ export default () => {
   }
 
   function initNodes () {
-    //
+    Object.keys(nodeTypes).map(key => {
+      nodeCreators[key] = nodeTypes[key](scale)
+    })
   }
 
   function buildLayout () {
@@ -83,63 +91,27 @@ export default () => {
     const lines = svg.select('.chart-group').selectAll('.line')
       .data(dataLines)
 
-    lines.enter().append('g')
-      .attr('class', 'line')
+    const linesEnter = lines.enter().append('g').attr('class', 'line')
+
+    lines.merge(linesEnter)
       .attr('transform', (d, i) => `translate(0,${lineHeightGap * i})`)
-        .call(redrawNodes)
 
     lines.exit().remove()
-  }
 
-  function redrawNodes (line) {
-    line.each(function (data, i) {
-      const { bar, event, checkpoint } = data.reduce((result, node) => {
-        return {
-          ...result,
-          [node.data.type]: result[node.data.type].concat(node)
-        }
-      }, {
-        bar: [],
-        event: [],
-        checkpoint: []
-      })
+    const nodes = lines.merge(linesEnter).selectAll('.node')
+      .data(d => d, (d, i) => `${d.depth}${d.data.id}${d.data.type}`)
 
-      redrawBarNodes(this, bar)
-      redrawEventNodes(this, event)
-      redrawCheckpointNodes(this, checkpoint)
+    const nodesEnter = nodes.enter().append('g')
+
+    nodes.merge(nodesEnter).attr('class', d => d.data.class
+      ? `node ${d.classed} ${d.data.class}`
+      : `node ${d.classed}`)
+    .each(function (d, i) {
+      const node = d3Selection.select(this)
+      nodeCreators[d.data.type](node, d)
     })
-  }
-
-  function redrawBarNodes (container, data) {
-    const barNode = bar(scale)
-
-    const nodes = d3Selection.select(container)
-      .selectAll('.bar')
-        .data(data, d => d.data.id)
-
-    nodes.enter().append('g')
-      .attr('class', d => `node ${d.classed}`)
-        .call(barNode)
 
     nodes.exit().remove()
-  }
-
-  function redrawEventNodes (container, data) {
-    const eventNode = event(scale)
-
-    const nodes = d3Selection.select(container)
-      .selectAll('.event')
-        .data(data, d => d.data.id)
-
-    nodes.enter().append('g')
-      .attr('class', d => `node ${d.classed}`)
-        .call(eventNode)
-
-    nodes.exit().remove()
-  }
-
-  function redrawCheckpointNodes (container, data) {
-    //
   }
 
   // function addMouseEvents (node) {

@@ -30,7 +30,7 @@ body, html {
   user-select: none;
 }
 .timeline .bar rect {
-  y: 12px;
+  y: 17px;
   height: 10px;
 }
 .timeline .bar.bar--wrapper rect {
@@ -41,13 +41,16 @@ body, html {
 }
 .timeline .event circle {
   cursor: pointer;
-  cy: 28px;
+  cy: 33px;
   r: 3px;
 }
 .timeline .event .tick {
   fill: #FFF;
   height: 10px;
-  transform: translate(0, 12px);
+  transform: translate(0, 17px);
+}
+.timeline .checkpoint circle {
+  cy: 8px;
 }
 
 /*EXAMPLE specific styles*/

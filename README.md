@@ -9,7 +9,7 @@ $ yarn dev
 
 ## Example
 ```javascript
-import createTimeline from 'timeline'
+import timeline from './timeline'
 
 const data = {
     // Root node, a wrapping bar
@@ -17,9 +17,8 @@ const data = {
     type: 'bar', // Node type
     start: 1485392400,
     end: 1485435600,
-    roundedCorners: true,
     children: [{
-        // Child nodes
+        // Child node
         id: 1,
         type: 'event',
         time: 1485402400,
@@ -27,22 +26,31 @@ const data = {
     }]
 }
 
-const root = document.getElementById('root')
-const timeline = createTimeline(root, {
-    height: 100,
-    margin: [10, 20],
-    domain: [1485392400, 1485435600]
-})
-timeline.draw(data)
+const timelineChart = timeline()
+  .margin({ top: 0, bottom: 0, left: 10, right: 10 })
+  .width(1200)
+  .height(150)
+  .domain([1485392400, 1485435600])
+
+d3.select('.chart')
+  .datum(data)
+  .call(timelineChart)
 ```
 
-### Prod bundle (~31kb gzipped)
+### Prod bundle
 ```sh
 $ yarn run build
 ```
 
 ## TODO
 
-* Tests
-* Highlight types (branch, children, parents)
-* Dont hide highlight when the hover moves to a node child
+* Transitions
+* Expose mouse events
+* xAxis
+* Highlight classes (branch, children, parents) on hover
+
+* Add tests
+* Icons inside nodes (checkpoints and events)
+
+* Tooltips
+* Brush tool
