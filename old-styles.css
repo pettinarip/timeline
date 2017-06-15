@@ -1,0 +1,116 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+.node, .node * { transition: all .4s ease-in-out; }
+.node.node--highlight * { transition-delay: .5s; }
+.node.node--displayed { opacity: 1; }
+.node.node--no-displayed { opacity: 0.2; filter: url(#grayscale); }
+
+.node.bar { transform-origin: center center; }
+.node.event circle { transform-origin: center 0; }
+.node.event.alert circle { transform-origin: center center; }
+.node.event .tick { transform-origin: center center; }
+.node.checkpoint .icon { transform-origin: bottom; }
+
+.node.bar.node--highlight { transform: scaleY(1.2); }
+.node.bar.node--highlight .bar-rounded { rx: 10px; ry:10px; }
+.node.event.node--highlight circle { transform: scale(1.2); }
+.node.event.alert.node--highlight circle { transform: scale(1.2); }
+.node.event.node--highlight .tick { transform: translate(0, 12px) scaleY(1.2); opacity: 0.8; }
+.node.checkpoint.node--highlight .icon { transform: scale(1.2); }
+.node.checkpoint.node--highlight .tick { transform: translate(0, 11px) scaleY(1.2); opacity: 0.8; }
+
+.node .node--no-highlight { transform: scale(1); }
+
+.timeline {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.timeline .bar-container, .timeline .bar-background {
+  fill: transparent;
+}
+.timeline .bar-rounded {
+  height: 10px;
+  rx: 5px;
+  ry: 5px;
+}
+.timeline .event .tick {
+  fill: #716f6f;
+  height: 10px;
+  transform: translate(0, 12px);
+  opacity: 0;
+}
+.timeline .checkpoint .tick {
+  fill: #716f6f;
+  height: 10px;
+  transform: translate(0, 12px);
+  opacity: 0;
+}
+.timeline .event circle {
+  cursor: pointer;
+  cy: 28px;
+  r: 3px;
+}
+.timeline .alert circle {
+  stroke: #fff;
+  stroke-width: 1;
+  r: 3px;
+  cy: 17px;
+  cursor: pointer;
+  opacity: 1;
+}
+.timeline .bar {
+  y: 12px;
+  height: 10px;
+}
+.timeline .bar.bar-down {
+  ashed-pattern");
+}
+.timeline .checkpoint .icon circle {
+  r: 8px;
+}
+.timeline .checkpoint .icon text {
+  font-size: 10px;
+  font-family: 'QM Regular';
+  text-anchor: middle;
+  alignment-baseline: central;
+}
+
+.selected .timeline .bar-rounded {
+  height: 20px;
+  rx: 10px;
+  ry: 10px;
+   }
+.selected .timeline .bar {
+  height: 20px; }
+  .selected .timeline .bar.trip {
+    }
+    .selected .timeline .bar.trip:hover {
+      , 0, 0, 0.35); }
+  .selected .timeline .bar.bar-down {
+    ashed-pattern-selected"); }
+.selected .timeline .bar-progress {
+  height: 20px; }
+.selected .timeline .checkpoint-tick {
+  height: 20px; }
+.selected .timeline .events {
+  visibility: visible;
+  transform: translate(0, 25px); }
+.selected .timeline .alerts {
+  transform: translate(0, 10px); }
+.selected .timeline .checkpoints {
+  transform: translate(0, -12px); }
+.selected .timeline .event {
+  r: 3px; }
+.selected .timeline .alert {
+  r: 4px; }
+.selected .timeline .checkpoint .icon circle {
+  r: 10px; }
+.selected .timeline .checkpoint .icon text {
+  font-size: 16px; }

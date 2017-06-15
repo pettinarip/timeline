@@ -1,0 +1,56 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+.node, .node * { transition: all .4s ease-in-out; }
+
+.node.bar { transform-origin: center center; }
+.node.event circle { transform-origin: center 0; }
+.node.event .tick { transform-origin: center center; }
+.node.checkpoint .icon { transform-origin: bottom; }
+
+.node.bar.node--highlight { transform: scaleY(1.2); }
+.node.bar.node--highlight .bar-rounded { rx: 10px; ry:10px; }
+.node.event.node--highlight circle { transform: scale(1.2); }
+.node.event.node--highlight .tick { transform: translate(0, 12px) scaleY(1.2); opacity: 0.8; }
+.node.checkpoint.node--highlight .icon { transform: scale(1.2); }
+.node.checkpoint.node--highlight .tick { transform: translate(0, 11px) scaleY(1.2); opacity: 0.8; }
+
+.node .node--no-highlight { transform: scale(1); }
+
+.timeline {
+  border: 1px solid #000;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.timeline .bar rect {
+  y: 12px;
+  height: 10px;
+}
+.timeline .bar.bar--wrapper rect {
+  fill: #CCC;
+}
+.timeline .bar.bar--primary rect {
+  fill: #000;
+}
+.timeline .event circle {
+  cursor: pointer;
+  cy: 28px;
+  r: 3px;
+}
+.timeline .event .tick {
+  fill: #FFF;
+  height: 10px;
+  transform: translate(0, 12px);
+}
+
+/*EXAMPLE specific styles*/
+.example {
+  margin: 0 20px;
+}
