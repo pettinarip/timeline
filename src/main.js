@@ -10,7 +10,7 @@ import { data1, data2 } from './data'
 const timelineChart1 = timeline()
   .margin({ top: 0, bottom: 0, left: 10, right: 10 })
   .width(1200)
-  .height(50)
+  .height(150)
   .domain([1485392400, 1485435600])
 
 select('#example1 .chart')

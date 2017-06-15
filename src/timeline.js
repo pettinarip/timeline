@@ -18,6 +18,7 @@ export default () => {
   }
   let width = 1200
   let height = 100
+  let lineHeightGap = 50
   let chartWidth
   let transitionTime = 750
   let showTreeClasses = true
@@ -38,7 +39,7 @@ export default () => {
       initNodes()
       buildLayout()
       buildSVG(this)
-      draw()
+      drawLines()
 
       // addMouseEvents()
     })
@@ -78,12 +79,13 @@ export default () => {
       .attr('height', height)
   }
 
-  function draw () {
+  function drawLines () {
     const lines = svg.select('.chart-group').selectAll('.line')
       .data(dataLines)
 
     lines.enter().append('g')
       .attr('class', 'line')
+      .attr('transform', (d, i) => `translate(0,${lineHeightGap * i})`)
         .call(redrawNodes)
 
     lines.exit().remove()
@@ -228,6 +230,15 @@ export default () => {
       return domain
     }
     domain = _x
+
+    return this
+  }
+
+  timeline.lineHeightGap = function (_x) {
+    if (!arguments.length) {
+      return lineHeightGap
+    }
+    lineHeightGap = _x
 
     return this
   }
