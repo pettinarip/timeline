@@ -1,6 +1,8 @@
 # Timeline
 Visualization made using D3 hierarchy. Each node can be a `bar`, `event` or `checkpoint` type.
 
+![timelines example](img/screen.png)
+
 ## Installation
 ```sh
 $ yarn
