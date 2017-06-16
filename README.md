@@ -46,7 +46,6 @@ $ yarn run build
 
 ## TODO
 
-* Expose mouse events
 * xAxis
 * Highlight classes (branch, children, parents) on hover
 
