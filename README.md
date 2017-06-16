@@ -46,11 +46,8 @@ $ yarn run build
 
 ## TODO
 
-* xAxis
 * Highlight classes (branch, children, parents) on hover
-
 * Add tests
 * Icons inside nodes (checkpoints and events)
-
 * Tooltips
 * Brush tool

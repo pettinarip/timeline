@@ -6,8 +6,8 @@ import { data1, data2, data2mod } from './data'
 const timelineChart1 = timeline()
   .margin({ top: 0, bottom: 0, left: 10, right: 10 })
   .width(1200)
-  .height(150)
-  .domain([1485392400, 1485435600])
+  .height(180)
+  .domain([1485392400000, 1485435600000])
 
 select('#example1 .chart')
   .datum(data1)
@@ -17,8 +17,8 @@ select('#example1 .chart')
 const timelineChart2 = timeline()
   .margin({ top: 0, bottom: 0, left: 10, right: 10 })
   .width(1200)
-  .height(50)
-  .domain([1485392400, 1485435600])
+  .height(80)
+  .domain([1485392400000, 1485435600000])
 
 function example2 (data) {
   select('#example2 .chart')

@@ -1,7 +1,9 @@
 import * as d3Selection from 'd3-selection'
 import { scaleTime } from 'd3-scale'
 import { hierarchy } from 'd3-hierarchy'
+import { axisTop } from 'd3-axis'
 import * as d3Dispatch from 'd3-dispatch'
+import { timeFormat } from 'd3-time-format'
 import 'd3-transition'
 
 import bar from './nodes/bar'
@@ -23,8 +25,11 @@ export default () => {
   let dataLines
   let scale
   let svg
+  let xAxis
   let domain
   let transitionDuration = 300
+  let showAxis = true
+  let tickFormat = '%H:%M'
 
   const dispatcher = d3Dispatch.dispatch('mouseOver', 'mouseOut', 'click')
 
@@ -42,6 +47,7 @@ export default () => {
       chartWidth = width - margin.left - margin.right
 
       buildScales()
+      buildAxis()
       initNodesConfig()
       buildLayout()
       buildSVG(this)
@@ -53,6 +59,11 @@ export default () => {
     scale = scaleTime()
       .rangeRound([0, chartWidth])
       .domain(domain || [dataNodes.start, dataNodes.end])
+  }
+
+  function buildAxis () {
+    xAxis = axisTop(scale)
+    xAxis.tickFormat(timeFormat(tickFormat))
   }
 
   function initNodesConfig () {
@@ -79,6 +90,13 @@ export default () => {
       svg.append('g')
         .attr('class', 'chart-group')
         .attr('transform', `translate(${margin.left},${margin.top})`)
+
+      if (showAxis) {
+        svg.append('g')
+          .attr('class', 'chart-axis')
+          .attr('transform', `translate(${margin.left},${height - 1})`)
+          .call(xAxis)
+      }
     }
 
     svg.attr('width', width)
@@ -191,6 +209,24 @@ export default () => {
       return transitionDuration
     }
     transitionDuration = _x
+
+    return this
+  }
+
+  timeline.showAxis = function (_x) {
+    if (!arguments.length) {
+      return showAxis
+    }
+    showAxis = _x
+
+    return this
+  }
+
+  timeline.tickFormat = function (_x) {
+    if (!arguments.length) {
+      return tickFormat
+    }
+    tickFormat = _x
 
     return this
   }
