@@ -8,6 +8,10 @@ Visualization made using D3 hierarchy. Each node can be a `bar`, `event` or `che
 $ yarn
 $ yarn dev
 ```
+### Prod bundle
+```sh
+$ yarn run build
+```
 
 ## Example
 ```javascript
@@ -37,11 +41,6 @@ const timelineChart = timeline()
 d3.select('.chart')
   .datum(data)
   .call(timelineChart)
-```
-
-### Prod bundle
-```sh
-$ yarn run build
 ```
 
 ## TODO
