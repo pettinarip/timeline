@@ -1,6 +1,7 @@
 import * as d3Selection from 'd3-selection'
 import { scaleTime } from 'd3-scale'
 import { hierarchy } from 'd3-hierarchy'
+import * as d3Dispatch from 'd3-dispatch'
 import 'd3-transition'
 
 import bar from './nodes/bar'
@@ -24,6 +25,8 @@ export default () => {
   let svg
   let domain
   let transitionDuration = 300
+
+  const dispatcher = d3Dispatch.dispatch('mouseOver', 'mouseOut', 'click')
 
   const nodeTypes = {
     bar,
@@ -108,6 +111,7 @@ export default () => {
     .each(function (d, i) {
       const node = d3Selection.select(this)
       nodeCreators[d.data.type].create(node, d)
+      addMouseEvents(node)
     })
 
     nodes.each(function (d, i) {
@@ -116,6 +120,25 @@ export default () => {
     })
 
     nodes.exit().remove()
+  }
+
+  function addMouseEvents (node) {
+    node
+      .on('mouseover', handleMouseOver)
+      .on('mouseout', handleMouseOut)
+      .on('click', handleClick)
+  }
+
+  function handleMouseOver (node) {
+    dispatcher.call('mouseOver', this, node, d3Selection.event)
+  }
+
+  function handleMouseOut (node) {
+    dispatcher.call('mouseOut', this, node, d3Selection.event)
+  }
+
+  function handleClick (node) {
+    dispatcher.call('click', this, node, d3Selection.event)
   }
 
   timeline.margin = function (_x) {
@@ -170,6 +193,12 @@ export default () => {
     transitionDuration = _x
 
     return this
+  }
+
+  timeline.on = function (_x) {
+    const value = dispatcher.on.apply(dispatcher, arguments)
+
+    return value === dispatcher ? timeline : value
   }
 
   return timeline
