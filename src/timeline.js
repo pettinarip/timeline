@@ -1,7 +1,6 @@
 import * as d3Selection from 'd3-selection'
 import { scaleTime } from 'd3-scale'
 import { hierarchy } from 'd3-hierarchy'
-import { dispatch } from 'd3-dispatch'
 import 'd3-transition'
 
 import bar from './nodes/bar'
@@ -19,14 +18,12 @@ export default () => {
   let height = 100
   let lineHeightGap = 50
   let chartWidth
-  let transitionTime = 750
-  let showTreeClasses = true
   let dataNodes
   let dataLines
   let scale
   let svg
   let domain
-  let dispatcher = dispatch('timelineClick', 'timelineMouseOver', 'timelineMouseOut')
+  let transitionDuration = 300
 
   const nodeTypes = {
     bar,
@@ -42,12 +39,10 @@ export default () => {
       chartWidth = width - margin.left - margin.right
 
       buildScales()
-      initNodes()
+      initNodesConfig()
       buildLayout()
       buildSVG(this)
       drawLines()
-
-      // addMouseEvents()
     })
   }
 
@@ -57,9 +52,9 @@ export default () => {
       .domain(domain || [dataNodes.start, dataNodes.end])
   }
 
-  function initNodes () {
+  function initNodesConfig () {
     Object.keys(nodeTypes).map(key => {
-      nodeCreators[key] = nodeTypes[key](scale)
+      nodeCreators[key] = nodeTypes[key](scale, transitionDuration)
     })
   }
 
@@ -123,62 +118,6 @@ export default () => {
     nodes.exit().remove()
   }
 
-  // function addMouseEvents (node) {
-  //   node.on('click', handleClick)
-  //   node.on('mouseover', handleMouseOver)
-  //   node.on('mouseout', handleMouseOut)
-  // }
-  //
-  // function handleClick (d) {
-  //   dispatcher.call('timelineClick', this, d3Selection.event, d)
-  // }
-
-  // function handleMouseOver (d) {
-  //   const node = this
-  //   dispatcher.call('timelineMouseOver', this, d3Selection.event, d)
-  //   if (d.data.highlight) {
-  //     toggleDisplayed(that.root, false)
-  //     toggleDisplayed(node, true)
-  //     toggleHighlight(node, true)
-  //     that.update()
-  //   }
-  // }
-  //
-  // function handleMouseOut (d) {
-  //   dispatcher.call('timelineMouseOut', this, d3Selection.event, d)
-  //   if (d.data.highlight) {
-  //     toggleDisplayed(that.root, true)
-  //     toggleHighlight(d, false)
-  //     that.update()
-  //   }
-  // }
-  //
-  // function toggleDisplayed (root, displayed = true) {
-  //   root.displayed = displayed
-  //   const nodes = root.descendants()
-  //   nodes.forEach(child => { child.displayed = displayed })
-  // }
-  //
-  // function toggleHighlight (root, highlight = true) {
-  //   root.highlight = highlight
-  //   const nodes = root.descendants()
-  //   nodes.forEach(child => { child.highlight = highlight })
-  // }
-  //
-  // // Check if any node has roundedCorners activated. If it does, then it
-  // // prepend a new node that is going to be the <clipPath> node
-  // function fixRoundedCornersNodes (node) {
-  //   if (node.roundedCorners) {
-  //     return node.children && node.children.length
-  //       ? { ...node, children: [{ ...node, roundedCorners: false, children: node.children.map(fixRoundedCornersNodes) }] }
-  //       : { ...node, children: [{ ...node, roundedCorners: false }] }
-  //   } else {
-  //     return node.children && node.children.length
-  //       ? { ...node, children: node.children.map(fixRoundedCornersNodes) }
-  //       : node
-  //   }
-  // }
-
   timeline.margin = function (_x) {
     if (!arguments.length) {
       return margin
@@ -220,6 +159,15 @@ export default () => {
       return lineHeightGap
     }
     lineHeightGap = _x
+
+    return this
+  }
+
+  timeline.transitionDuration = function (_x) {
+    if (!arguments.length) {
+      return transitionDuration
+    }
+    transitionDuration = _x
 
     return this
   }

@@ -1,4 +1,4 @@
-export default (scale) => {
+export default (scale, tDuration) => {
   let radius = 5
 
   function create (node, d) {
@@ -11,7 +11,7 @@ export default (scale) => {
   }
 
   function update (node, d) {
-    node.transition().attr('transform', `translate(${scale(d.data.time)},0)`)
+    node.transition().duration(tDuration).attr('transform', `translate(${scale(d.data.time)},0)`)
     node.select('circle')
       .attr('r', d => d.data.radius ? d.data.radius : radius)
     // icon.append('text').text(d => d.icon)

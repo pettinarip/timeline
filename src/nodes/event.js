@@ -1,4 +1,4 @@
-export default (scale) => {
+export default (scale, tDuration) => {
   function create (node, d) {
     node.attr('transform', `translate(${scale(d.data.time)},0)`)
         .append('circle')
@@ -12,7 +12,7 @@ export default (scale) => {
   }
 
   function update (node, d) {
-    node.transition().attr('transform', `translate(${scale(d.data.time)},0)`)
+    node.transition().duration(tDuration).attr('transform', `translate(${scale(d.data.time)},0)`)
     node.select('circle')
       .attr('fill', d.data.color || '#000')
 
